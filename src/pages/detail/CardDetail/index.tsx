@@ -5,31 +5,10 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Persons } from "../../../models/Persons.models";
-import { detailsPersonsService } from "../../../services/infrastructure/servicePersons";
+import { useDetailPerson } from "../../../hooks/useDetailPerson";
 
 const CardDetail = () => {
-  const navigate = useNavigate();
-  const params = useParams();
-  const [detailPerson, setDetailPerson] = useState<Persons | null>(null);
-
-  const getDetailPerson = async () => {
-    try {
-      const responseDetail = await detailsPersonsService(params.personId);
-      console.log("responseDetail : ", responseDetail);
-      setDetailPerson(responseDetail);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (params.personId) {
-      getDetailPerson();
-    }
-  }, [params.personId]);
+const { navigate, detailPerson } = useDetailPerson();
 
   return (
     <Paper elevation={3}>

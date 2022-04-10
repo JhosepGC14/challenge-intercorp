@@ -1,50 +1,8 @@
 import { Button, Grid, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { createPersonsService } from "../../../../services/infrastructure/servicePersons";
-import { Persons } from "../../../../models/Persons.models";
-
-const validationSchema = yup.object({
-  name: yup.string().required("Nombre es requerido"),
-  lastName: yup.string().required("Apellido es requerido"),
-  age: yup
-    .number()
-    .positive()
-    .min(1, "Edad minima 1")
-    .max(200, "Edad maxima 200")
-    .required("Edad es requerida")
-    .integer(),
-  dateBirth: yup.date().max(new Date(), "Fecha maxima es hoy"),
-});
+import { useFormCreate } from "../../../../hooks/useFromCreate";
 
 const FormCreate = () => {
-  const navigate = useNavigate();
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      lastName: "",
-      age: "",
-      dateBirth: new Date(),
-    },
-
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      
-      console.log("new body : ", values);
-      createRegisterPerson(values);
-    },
-  });
-
-  const createRegisterPerson = async (values : any) => {
-    try {
-      const response = await createPersonsService(values);
-      console.log("respuesta de la creacion de la persona : ", response);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { formik } = useFormCreate();
 
   return (
     <form onSubmit={formik.handleSubmit}>
