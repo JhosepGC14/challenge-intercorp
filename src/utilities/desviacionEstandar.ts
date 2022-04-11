@@ -24,6 +24,3 @@ export const standarDeviation = (listPersons: Persons[]) => {
   // Returning the Standered deviation
   return Math.sqrt(variance);
 };
-
-// console.log(StandarDeviation([1, 2, 3, 4, 5]));
-// console.log(StandarDeviation([20, 22, 24, 50, 70]));
